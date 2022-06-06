@@ -13,7 +13,9 @@ UI 요소. 화면을 표현하기 위한 객체
 다시 정리하면 뷰는 모델에 대한 지식이 없고 뷰모델과 모델은 뷰에 대한 지식이 없다. 
 그렇다면 이런 느슨한 연결은 어떻게 구현이 되며, 어떤 이점이 있을까?
 ## Databinding
-tobe...
+뷰와 뷰모델 사이의 느슨한 연결을 구현하는 핵심요소. 느슨한 연결을 유지하면서 소스의 변경 사항을 대상으로 업데이트 하거나 유효성 검사 오류를 뷰에 전송하는 인프라를 제공한다. 데이터 바인딩이 제공하는 인프라를 통해 개발자의 비용을 절감하고 표준화된 방법을 통해 일관적인 패턴을 제공할 수 있다.
+## Template/Resource
+
 
 ## References
 - https://docs.microsoft.com/en-us/archive/msdn-magazine/2009/february/patterns-wpf-apps-with-the-model-view-viewmodel-design-pattern
