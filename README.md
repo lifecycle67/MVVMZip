@@ -15,7 +15,10 @@ UI 요소. 화면을 표현하기 위한 객체
 ## Databinding
 뷰와 뷰모델 사이의 느슨한 연결을 구현하는 핵심요소. 느슨한 연결을 유지하면서 소스의 변경 사항을 대상으로 업데이트 하거나 유효성 검사 오류를 뷰에 전송하는 인프라를 제공한다. 데이터 바인딩이 제공하는 인프라를 통해 개발자의 비용을 절감하고 표준화된 방법을 통해 일관적인 패턴을 제공할 수 있다.
 ## Template/Resource
-
+데이터 템플릿은 ViewModel의 데이터 개체와 같은 멤버
+ViewModel의 특정 멤버 또는 ViewModel 자체를 어떻게 view로 표현할 것인지 결정한다. 리소스 시스템은 자동으로 템플릿을 찾고 적용하도록 할 수 있다.
+## Command
+tobe...
 
 ## References
 - https://docs.microsoft.com/en-us/archive/msdn-magazine/2009/february/patterns-wpf-apps-with-the-model-view-viewmodel-design-pattern
