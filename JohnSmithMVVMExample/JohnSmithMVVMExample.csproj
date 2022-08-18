@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="DataAccess\CustomerAddedEventArgs.cs" />
     <Compile Include="DataAccess\CustomerRepository.cs" />
+    <Compile Include="DataAccess\ICustomerRepository.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

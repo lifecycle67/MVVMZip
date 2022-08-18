@@ -15,7 +15,7 @@ namespace DemoApp.ViewModel
         #region Fields
 
         readonly Customer _customer;
-        readonly CustomerRepository _customerRepository;
+        readonly ICustomerRepository _customerRepository;
         string _customerType;
         string[] _customerTypeOptions;
         bool _isSelected;
@@ -25,7 +25,7 @@ namespace DemoApp.ViewModel
 
         #region Constructor
 
-        public CustomerViewModel(Customer customer, CustomerRepository customerRepository)
+        public CustomerViewModel(Customer customer, ICustomerRepository customerRepository)
         {
             _customer = customer ?? throw new ArgumentNullException("customer");
             _customerRepository = customerRepository ?? throw new ArgumentNullException("customerRepository");

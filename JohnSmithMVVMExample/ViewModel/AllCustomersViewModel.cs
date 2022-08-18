@@ -19,13 +19,13 @@ namespace DemoApp.ViewModel
     {
         #region Fields
 
-        readonly CustomerRepository _customerRepository;
+        readonly ICustomerRepository _customerRepository;
 
         #endregion // Fields
 
         #region Constructor
 
-        public AllCustomersViewModel(CustomerRepository customerRepository)
+        public AllCustomersViewModel(ICustomerRepository customerRepository)
         {
             if (customerRepository == null)
                 throw new ArgumentNullException("customerRepository");
