@@ -14,24 +14,18 @@ namespace DemoApp.ViewModel.Tests
     [TestClass()]
     public class AllCustomersViewModelTests
     {
-        private AllCustomersViewModel _sut;
-        private CustomerRepositoryStub _customerRepository;
-
-        public AllCustomersViewModelTests()
-        {
-            _customerRepository = new CustomerRepositoryStub();
-            _sut = new AllCustomersViewModel(_customerRepository);
-        }
-
         /// <summary>
         /// CustomerRepository의 데이터가 전체 고객 목록으로 구성되었는지 검증
         /// </summary>
         [TestMethod()]
         public void AllCustomerListTest()
         {
+            CustomerRepositoryStub customerRepository = new CustomerRepositoryStub();
+            AllCustomersViewModel sut = new AllCustomersViewModel(customerRepository);
+
             int count = 0;
             bool isValid = true;
-            foreach (CustomerViewModel customerVm in _sut.AllCustomersView.SourceCollection)
+            foreach (CustomerViewModel customerVm in sut.AllCustomersView.SourceCollection)
             {
                 count++;
                 var cust = Customer.CreateCustomer(customerVm.TotalSales,
@@ -39,7 +33,7 @@ namespace DemoApp.ViewModel.Tests
                                                    customerVm.LastName,
                                                    customerVm.IsCompany,
                                                    customerVm.Email);
-                if (_customerRepository.ContainsCustomer(cust) == false)
+                if (customerRepository.ContainsCustomer(cust) == false)
                     isValid = false;
             }
 
@@ -53,12 +47,15 @@ namespace DemoApp.ViewModel.Tests
         [TestMethod()]
         public void AllCustomersViewTestGroupedByIsCompany()
         {
-            Assert.AreEqual(_sut.AllCustomersView.CanGroup, true);
-            Assert.AreEqual(_sut.AllCustomersView.GroupDescriptions.Count, 1);
-            foreach (CustomerViewModel customer in _sut.AllCustomersView.SourceCollection)
+            CustomerRepositoryStub customerRepository = new CustomerRepositoryStub();
+            AllCustomersViewModel sut = new AllCustomersViewModel(customerRepository);
+
+            Assert.AreEqual(sut.AllCustomersView.CanGroup, true);
+            Assert.AreEqual(sut.AllCustomersView.GroupDescriptions.Count, 1);
+            foreach (CustomerViewModel customer in sut.AllCustomersView.SourceCollection)
             {
                 Assert.AreEqual(
-                    _sut.AllCustomersView.GroupDescriptions[0].GroupNameFromItem(customer, 0, CultureInfo.CurrentCulture),
+                    sut.AllCustomersView.GroupDescriptions[0].GroupNameFromItem(customer, 0, CultureInfo.CurrentCulture),
                     customer.IsCompany);
             }
         }
