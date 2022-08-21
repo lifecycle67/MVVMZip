@@ -5,21 +5,21 @@
   xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
   >
   <UserControl.Resources>
-    <CollectionViewSource
+    <!--<CollectionViewSource
       x:Key="CustomerGroups" 
       Source="{Binding Path=AllCustomers}">
       <CollectionViewSource.GroupDescriptions>
         <PropertyGroupDescription PropertyName="IsCompany" />
       </CollectionViewSource.GroupDescriptions>
       <CollectionViewSource.SortDescriptions>
-        <!-- 
+        --><!-- 
         Sort descending by IsCompany so that the 'True' values appear first,
         which means that companies will always be listed before people.
-        -->
+        --><!--
         <scm:SortDescription PropertyName="IsCompany" Direction="Descending" />
         <scm:SortDescription PropertyName="DisplayName" Direction="Ascending" />
       </CollectionViewSource.SortDescriptions>
-    </CollectionViewSource>
+    </CollectionViewSource>-->
 
     <GroupStyle x:Key="CustomerGroupStyle">
       <GroupStyle.HeaderTemplate>
@@ -75,7 +75,7 @@
 
     <ListView 
       AlternationCount="2" 
-      DataContext="{StaticResource CustomerGroups}" 
+      DataContext="{Binding AllCustomersView}" 
       ItemContainerStyle="{StaticResource CustomerItemStyle}"
       ItemsSource="{Binding}">
       <ListView.GroupStyle>

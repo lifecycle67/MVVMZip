@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Data;
 using DemoApp.DataAccess;
 using DemoApp.Properties;
 
@@ -20,6 +21,11 @@ namespace DemoApp.ViewModel
         #region Fields
 
         readonly ICustomerRepository _customerRepository;
+
+        /// <summary>
+        /// Returns a collection of all the CustomerViewModel objects.
+        /// </summary>
+        private ObservableCollection<CustomerViewModel> _allCustomers;
 
         #endregion // Fields
 
@@ -50,18 +56,20 @@ namespace DemoApp.ViewModel
             foreach (CustomerViewModel cvm in all)
                 cvm.PropertyChanged += this.OnCustomerViewModelPropertyChanged;
 
-            this.AllCustomers = new ObservableCollection<CustomerViewModel>(all);
-            this.AllCustomers.CollectionChanged += this.OnCollectionChanged;
+            _allCustomers = new ObservableCollection<CustomerViewModel>(all);
+            _allCustomers.CollectionChanged += this.OnCollectionChanged;
+
+            AllCustomersView = CollectionViewSource.GetDefaultView(_allCustomers);
+            GroupDescription customerTypeGroup = new PropertyGroupDescription(nameof(CustomerViewModel.IsCompany));
+            AllCustomersView.GroupDescriptions.Add(customerTypeGroup);
+            AllCustomersView.SortDescriptions.Add(new SortDescription(nameof(CustomerViewModel.IsCompany), ListSortDirection.Descending));
+            AllCustomersView.SortDescriptions.Add(new SortDescription(nameof(CustomerViewModel.DisplayName), ListSortDirection.Ascending));
         }
 
         #endregion // Constructor
 
         #region Public Interface
-
-        /// <summary>
-        /// Returns a collection of all the CustomerViewModel objects.
-        /// </summary>
-        public ObservableCollection<CustomerViewModel> AllCustomers { get; private set; }
+        public ICollectionView AllCustomersView { get; private set; }
 
         /// <summary>
         /// Returns the total sales sum of all selected customers.
@@ -70,7 +78,7 @@ namespace DemoApp.ViewModel
         {
             get
             {
-                return this.AllCustomers.Sum(
+                return _allCustomers.Sum(
                     custVM => custVM.IsSelected ? custVM.TotalSales : 0.0);
             }
         }
@@ -81,11 +89,11 @@ namespace DemoApp.ViewModel
 
         protected override void OnDispose()
         {
-            foreach (CustomerViewModel custVM in this.AllCustomers)
+            foreach (CustomerViewModel custVM in _allCustomers)
                 custVM.Dispose();
 
-            this.AllCustomers.Clear();
-            this.AllCustomers.CollectionChanged -= this.OnCollectionChanged;
+            _allCustomers.Clear();
+            _allCustomers.CollectionChanged -= this.OnCollectionChanged;
 
             _customerRepository.CustomerAdded -= this.OnCustomerAddedToRepository;
         }
@@ -123,7 +131,7 @@ namespace DemoApp.ViewModel
         void OnCustomerAddedToRepository(object sender, CustomerAddedEventArgs e)
         {
             var viewModel = new CustomerViewModel(e.NewCustomer, _customerRepository);
-            this.AllCustomers.Add(viewModel);
+            _allCustomers.Add(viewModel);
         }
 
         #endregion // Event Handling Methods
