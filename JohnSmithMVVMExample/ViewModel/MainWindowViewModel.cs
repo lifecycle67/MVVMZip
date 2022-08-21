@@ -20,7 +20,7 @@ namespace DemoApp.ViewModel
         #region Fields
                 
         ReadOnlyCollection<CommandViewModel> _commands;
-        readonly CustomerRepository _customerRepository;
+        readonly ICustomerRepository _customerRepository;
         ObservableCollection<WorkspaceViewModel> _workspaces;
 
         #endregion // Fields
@@ -32,6 +32,12 @@ namespace DemoApp.ViewModel
             base.DisplayName = Strings.MainWindowViewModel_DisplayName;
 
             _customerRepository = new CustomerRepository(customerDataFile);
+        }
+
+        public MainWindowViewModel(ICustomerRepository customerRepository)
+        {
+            base.DisplayName = Strings.MainWindowViewModel_DisplayName;
+            _customerRepository = customerRepository;
         }
 
         #endregion // Constructor
