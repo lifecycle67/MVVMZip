@@ -71,7 +71,15 @@ namespace DemoApp.ViewModel.Tests
 
         public void AddCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            if (customer == null)
+                throw new ArgumentNullException("customer");
+
+            if (!_customerList.Contains(customer))
+            {
+                _customerList.Add(customer);
+
+                this.CustomerAdded?.Invoke(this, new CustomerAddedEventArgs(customer));
+            }
         }
 
         public bool ContainsCustomer(Customer customer)
